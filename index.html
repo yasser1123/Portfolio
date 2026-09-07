@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Ahmed Yasser — AI Engineer</title>
+<meta name="description" content="Portfolio of Ahmed Yasser, AI engineer. Retrieval, evaluation, compression and serving — presented as a desktop you can open." />
+<meta name="theme-color" content="#cdbc99" />
+<meta property="og:title" content="Ahmed Yasser — AI Engineer" />
+<meta property="og:description" content="Retrieval that cites its sources, models small enough to run on a phone, monitoring that catches a problem before a user does." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="./public/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./styles/tokens.css" />
+<link rel="stylesheet" href="./styles/base.css" />
+<link rel="stylesheet" href="./styles/boot.css" />
+<link rel="stylesheet" href="./styles/menubar.css" />
+<link rel="stylesheet" href="./styles/dock.css" />
+<link rel="stylesheet" href="./styles/window.css" />
+<link rel="stylesheet" href="./styles/content.css" />
+<link rel="stylesheet" href="./styles/apps.css" />
+</head>
+<body>
+  <!-- Boot gate: the F11 instruction, then "come in". -->
+  <div id="boot" class="boot" aria-live="polite"></div>
+
+  <!-- The machine. Hidden until boot completes. -->
+  <div id="os" class="os" hidden>
+    <header id="menubar" class="menubar"></header>
+    <main id="desktop" class="desktop">
+      <div id="desktop-content"></div>
+    </main>
+    <div id="window-layer" class="window-layer"></div>
+    <nav id="dock" class="dock-wrap" aria-label="Dock"></nav>
+  </div>
+
+  <noscript>
+    <div style="padding:48px;font-family:Georgia,serif;background:#e6dcc4;color:#2a251d">
+      <h1 style="font-family:sans-serif;text-transform:uppercase">Ahmed Yasser — AI Engineer</h1>
+      <p>This portfolio is an interactive desktop and needs JavaScript. The short version:
+      I build retrieval and inference systems that hold up in production — evaluation harnesses,
+      serving stacks, and the monitoring that catches a regression before a user does.</p>
+      <p>Reach me at <a href="mailto:hello@ahmedyasser.dev">hello@ahmedyasser.dev</a>.</p>
+    </div>
+  </noscript>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

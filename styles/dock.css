@@ -1,0 +1,136 @@
+/* ── Dock ────────────────────────────────────────────────────────────────── */
+.dock-wrap {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-dock);
+  display: flex; justify-content: center;
+  padding: 0 10px 10px;
+  pointer-events: none;
+  transition: transform 380ms var(--ease-out), opacity 300ms ease;
+}
+.dock-wrap > * { pointer-events: auto; }
+.os.is-window-fullscreen .dock-wrap { transform: translateY(120%); opacity: 0; }
+.os.is-window-fullscreen.reveal-chrome .dock-wrap { transform: translateY(0); opacity: 1; }
+.dock-wrap.is-entering { transform: translateY(140%); }
+
+.dock {
+  display: flex; align-items: flex-end; gap: 6px;
+  padding: 7px 9px;
+  border-radius: 20px;
+  background: rgba(69, 61, 49, 0.62);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  box-shadow:
+    0 18px 44px rgba(30, 24, 14, 0.42),
+    inset 0 1px 0 rgba(253, 250, 243, 0.22),
+    inset 0 0 0 1px rgba(253, 250, 243, 0.1);
+  max-width: calc(100vw - 24px);
+  /* Must stay visible: tooltips sit above the dock and magnified icons grow
+     past its top edge. Setting overflow-x makes overflow-y compute to `auto`
+     as well, which clips both — so scrolling is only enabled below, on touch,
+     where there are no hover tooltips to lose. */
+  overflow: visible;
+}
+.dock::-webkit-scrollbar { display: none; }
+
+@media (hover: none) {
+  .dock { overflow-x: auto; scrollbar-width: none; }
+}
+
+.dock-sep {
+  flex: none; align-self: center;
+  width: 1px; height: 40px; margin: 0 4px;
+  background: rgba(253, 250, 243, 0.2);
+}
+
+.dock-item {
+  position: relative; flex: none;
+  display: flex; flex-direction: column; align-items: center;
+  width: 52px;
+  transform-origin: 50% 100%;
+  transition: transform 200ms var(--ease-out);
+}
+.dock-icon {
+  position: relative;
+  width: 46px; height: 46px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 11px;
+  transition: filter 180ms ease;
+}
+.dock-item:active .dock-icon { filter: brightness(0.88); }
+.dock-icon svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 3px 5px rgba(24,19,10,0.35)); }
+
+/* Running indicator */
+.dock-dot {
+  width: 4px; height: 4px; margin-top: 3px; border-radius: 50%;
+  background: rgba(253, 250, 243, 0.85);
+  opacity: 0; transform: scale(0.5);
+  transition: opacity 200ms ease, transform 200ms var(--ease-out);
+}
+.dock-item.is-running .dock-dot { opacity: 1; transform: scale(1); }
+
+/* Tooltip */
+.dock-tip {
+  position: absolute; bottom: calc(100% + 12px); left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  padding: 5px 10px; border-radius: 5px; white-space: nowrap;
+  background: rgba(32, 27, 19, 0.94);
+  color: var(--paper-1);
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+  box-shadow: 0 6px 16px rgba(24,19,10,0.4);
+  opacity: 0; pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms var(--ease-out);
+}
+.dock-tip::after {
+  content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  border: 5px solid transparent; border-top-color: rgba(32, 27, 19, 0.94);
+}
+.dock-item:hover .dock-tip, .dock-item:focus-visible .dock-tip {
+  opacity: 1; transform: translateX(-50%) translateY(0);
+}
+
+/* Bounce when an app is launched */
+@keyframes dockBounce {
+  0%, 100% { transform: translateY(0); }
+  28%      { transform: translateY(-17px); }
+  55%      { transform: translateY(0); }
+  72%      { transform: translateY(-7px); }
+}
+.dock-item.is-bouncing .dock-icon { animation: dockBounce 720ms var(--ease-io); }
+
+/* Minimized window tiles live to the right of the separator */
+.dock-min .dock-icon {
+  border-radius: 6px; overflow: hidden;
+  background: linear-gradient(172deg, var(--paper-0) 0%, var(--paper-3) 100%);
+  box-shadow: 0 3px 8px rgba(24,19,10,0.4), inset 0 0 0 1px rgba(42,37,29,0.28);
+  padding: 3px;
+}
+.dock-min .dock-min-thumb {
+  width: 100%; height: 100%; border-radius: 3px;
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--paper-0);
+}
+.dock-min .dock-min-bar { height: 7px; flex: none; background: linear-gradient(180deg, var(--chrome-a), var(--chrome-b)); }
+.dock-min .dock-min-body {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-weight: 700; font-size: 13px; color: var(--ink);
+}
+
+/* Open but minimised: still listed, visibly tucked away. */
+.dock-min.is-tucked .dock-icon { opacity: 0.55; }
+.dock-min.is-tucked .dock-min-bar { background: linear-gradient(180deg, #6f6555, #5b5245); }
+
+/* The focused window gets the marker under its tile. */
+.dock-min::after {
+  content: ""; position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent);
+  opacity: 0; transition: opacity 180ms ease;
+}
+.dock-min.is-active::after { opacity: 1; }
+.dock-min.is-active .dock-icon {
+  box-shadow: 0 3px 8px rgba(24,19,10,0.4), inset 0 0 0 1px rgba(200,69,43,0.75);
+}
+
+@media (max-width: 560px) {
+  .dock-item { width: 46px; }
+  .dock-icon { width: 40px; height: 40px; }
+}

@@ -1,0 +1,66 @@
+/* Design tokens lifted from the original artboard so the OS chrome and the
+   page content stay one material. Change the palette here, not in components. */
+:root {
+  /* Paper stack, lightest to darkest */
+  --paper-0: #fdfaf3;
+  --paper-1: #fbf7ee;
+  --paper-2: #f6f0e2;
+  --paper-3: #f0e9d9;
+  --paper-4: #e6dcc4;
+  --kraft:   #cdbc99;
+  --kraft-d: #cfbf9c;
+
+  /* Ink */
+  --ink:     #2a251d;
+  --ink-2:   #4d4433;
+  --ink-3:   #5c5340;
+  --muted:   #6d6045;
+  --muted-2: #8d8065;
+  --hair:    rgba(42, 37, 29, 0.16);
+  --hair-2:  rgba(42, 37, 29, 0.25);
+  --hair-3:  rgba(74, 58, 32, 0.22);
+
+  /* Accents */
+  --accent:  #c8452b;
+  --rust:    #b03d25;
+  --olive:   #6f8f4a;
+  --amber:   #d8a13f;
+
+  /* Window chrome */
+  --chrome-a: #574e40;
+  --chrome-b: #453d31;
+  --chrome-fg: #f2e7cf;
+  --chrome-fg-dim: #cdbfa5;
+
+  /* Folder */
+  --folder-a: #d8b273;
+  --folder-b: #c69c5c;
+  --folder-c: #d3ac6c;
+  --folder-d: #ab8339;
+
+  /* Type */
+  --display: 'Archivo Narrow', 'Helvetica Neue', sans-serif;
+  --body:    Newsreader, Georgia, serif;
+  --mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* Geometry */
+  --menubar-h: 26px;
+  --dock-h: 74px;
+  --win-radius: 10px;
+  --z-desktop: 1;
+  --z-windows: 40;
+  --z-dock: 70;
+  --z-menubar: 75;
+  --z-boot: 100;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-io:  cubic-bezier(0.65, 0, 0.35, 1);
+  --genie:    cubic-bezier(0.32, 0, 0.16, 1);
+}
+
+/* Grain overlay reused by desktop and boot */
+.grain {
+  background-image: repeating-linear-gradient(
+    0deg, rgba(74,58,32,0.05) 0px, rgba(74,58,32,0.05) 1px, transparent 1px, transparent 4px);
+}

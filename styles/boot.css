@@ -1,0 +1,120 @@
+/* ── Boot gate ───────────────────────────────────────────────────────────── */
+.boot {
+  position: fixed; inset: 0; z-index: var(--z-boot);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--kraft);
+  background-image: repeating-linear-gradient(
+    0deg, rgba(74,58,32,0.06) 0px, rgba(74,58,32,0.06) 1px, transparent 1px, transparent 4px);
+  box-shadow: 0 24px 60px rgba(74,58,32,0.4);
+  transition: transform 900ms var(--ease-io), opacity 600ms ease;
+}
+.boot[hidden] { display: none; }
+.boot.is-lifting { transform: translateY(-101%); }
+
+.boot-card-wrap { position: relative; width: min(420px, 84vw); }
+
+.boot-tab {
+  position: absolute; left: 0; top: -27px; height: 28px; padding: 0 16px;
+  display: flex; align-items: center; gap: 10px;
+  border-radius: 5px 5px 0 0; background: var(--rust); color: #f2e7cf;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  transform-origin: 0 100%;
+  animation: bootTab 620ms var(--ease-out) 100ms both;
+}
+.boot-tab .dim { opacity: 0.6; }
+
+.boot-card {
+  position: relative;
+  padding: 28px 26px 24px;
+  border-radius: 2px 6px 6px 6px;
+  background: linear-gradient(168deg, var(--paper-0) 0%, var(--paper-3) 100%);
+  box-shadow: 0 20px 44px rgba(74,58,32,0.26);
+  animation: bootFade 500ms ease 40ms both;
+}
+
+.boot-name {
+  font-family: var(--display); font-weight: 700; font-size: 38px; line-height: 0.9;
+  text-transform: uppercase;
+  animation: bootUp 700ms var(--ease-out) 260ms both;
+}
+.boot-rule {
+  margin-top: 14px; height: 2px; background: rgba(42,37,29,0.55); transform-origin: 0 50%;
+  animation: bootRule 900ms var(--ease-io) 420ms both;
+}
+
+.boot-step { margin-top: 18px; animation: bootFade 500ms ease 700ms both; }
+.boot-kicker {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted-2); margin-bottom: 12px;
+}
+.boot-instruction {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 17px; line-height: 1.45; font-weight: 300;
+}
+
+/* The F11 keycap */
+.keycap {
+  flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 54px; height: 44px; padding: 0 10px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, var(--paper-0) 0%, #e8e0cc 100%);
+  box-shadow:
+    0 3px 0 0 #bdb096,
+    0 5px 10px rgba(74,58,32,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+  color: var(--ink);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.keycap.is-pressed,
+.boot.is-fullscreen .keycap {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 0 #bdb096, 0 2px 5px rgba(74,58,32,0.28), inset 0 1px 0 rgba(255,255,255,0.6);
+}
+.boot.is-fullscreen .keycap { background: linear-gradient(180deg, #dfe8cf 0%, #cbd8b6 100%); }
+
+.boot-hint {
+  margin-top: 14px; font-family: var(--mono); font-size: 10px; line-height: 1.7;
+  letter-spacing: 0.1em; color: var(--muted-2);
+}
+.boot-status {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--muted-2);
+}
+.boot-status .led {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--muted-2);
+  transition: background 300ms ease, box-shadow 300ms ease;
+}
+.boot.is-fullscreen .boot-status .led { background: var(--olive); box-shadow: 0 0 0 3px rgba(111,143,74,0.22); }
+.boot.is-fullscreen .boot-status { color: var(--ink-2); }
+
+.boot-actions { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.boot-btn {
+  padding: 12px 20px; border-radius: 3px;
+  background: var(--ink); color: var(--paper-1);
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  transition: background 220ms ease, transform 180ms ease;
+}
+.boot-btn:hover { background: var(--accent); }
+.boot-btn:active { transform: translateY(1px); }
+.boot-btn--ghost {
+  background: transparent; color: var(--ink-2);
+  box-shadow: inset 0 0 0 1px var(--hair-2);
+}
+.boot-btn--ghost:hover { background: rgba(42,37,29,0.06); color: var(--ink); }
+
+.boot-stamp {
+  position: absolute; right: -8px; bottom: 14px;
+  padding: 6px 11px; border: 2px solid rgba(176,61,37,0.55); border-radius: 3px;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(176,61,37,0.85); background: rgba(253,250,243,0.55);
+  animation: bootStamp 480ms var(--ease-out) 1000ms both;
+}
+
+@keyframes bootTab   { 0% { transform: translateY(-26px) rotate(-3deg); opacity: 0; } 100% { transform: translateY(0) rotate(-1.5deg); opacity: 1; } }
+@keyframes bootFade  { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes bootUp    { 0% { opacity: 0; transform: translateY(22px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes bootRule  { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+@keyframes bootStamp { 0% { opacity: 0; transform: rotate(-14deg) scale(1.5); } 70%, 100% { opacity: 1; transform: rotate(-7deg) scale(1); } }
