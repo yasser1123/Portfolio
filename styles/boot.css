@@ -105,11 +105,15 @@
 }
 .boot-btn--ghost:hover { background: rgba(42,37,29,0.06); color: var(--ink); }
 
+/* The stamp carries PROFILE.role, so its width varies. Keep it anchored inside
+   the card and let it shrink rather than hang off the corner. */
 .boot-stamp {
-  position: absolute; right: -8px; bottom: 14px;
-  padding: 6px 11px; border: 2px solid rgba(176,61,37,0.55); border-radius: 3px;
-  font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
-  color: rgba(176,61,37,0.85); background: rgba(253,250,243,0.55);
+  position: absolute; right: 10px; bottom: 16px;
+  max-width: calc(100% - 20px);
+  padding: 5px 9px; border: 2px solid rgba(176,61,37,0.55); border-radius: 3px;
+  font-family: var(--mono); font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  color: rgba(176,61,37,0.85); background: rgba(253,250,243,0.7);
   animation: bootStamp 480ms var(--ease-out) 1000ms both;
 }
 

@@ -1,118 +1,109 @@
 export const PROFILE = {
   name: 'Ahmed Yasser',
-  role: 'AI Engineer',
+  role: 'AI & Full-Stack Engineer',
   place: 'Cairo · remote-friendly',
-  email: 'hello@ahmedyasser.dev',
-  lede: 'I build the parts of AI systems that have to hold up in production — retrieval that cites its sources, models small enough to run on a phone, monitoring that catches a problem before a user does.',
-  sub: 'Three years across clinical NLP, on-device speech, and ML infrastructure. I like problems where the model is the easy half.',
-  skills: ['Python', 'PyTorch', 'RAG', 'vLLM', 'Quantisation', 'Kubernetes', 'Evaluation', 'ONNX'],
+  email: 'ayasser.hashem@gmail.com',
+  lede: 'I build complete systems on my own — an Arabic-first storefront with its money handled in integer minor units, a six-agent healthcare pipeline that refuses before it answers, a threaded Earth Engine pipeline that ends in a spreadsheet a researcher can open.',
+  sub: 'Full-stack and AI engineering, mostly solo, mostly shipped end to end. I am drawn to the parts everyone skips: the race condition, the validation split, the refusal path.',
+  skills: ['TypeScript', 'Python', 'Next.js', 'React Native', 'Multi-agent AI', 'PostgreSQL', 'Playwright', 'Earth Engine'],
   links: [
-    { label: 'Email', value: 'hello@ahmedyasser.dev', href: 'mailto:hello@ahmedyasser.dev' },
-    { label: 'GitHub', value: 'github.com/ahmedyasser', href: '#' },
-    { label: 'LinkedIn', value: 'in/ahmedyasser', href: '#' }
+    { label: 'Email', value: 'ayasser.hashem@gmail.com', href: 'mailto:ayasser.hashem@gmail.com' },
+    { label: 'GitHub', value: 'github.com/yasser1123', href: 'https://github.com/yasser1123' },
+    { label: 'LinkedIn', value: 'in/ahmed-yasser-dev', href: 'https://linkedin.com/in/ahmed-yasser-dev' }
   ]
 };
 
 export const STORY = [
-  'I started in embedded systems, writing C for boards that gave you 64KB and no second chances. That is still how I think about models: a budget you spend, not a magic box you call.',
-  'The route here went embedded → backend → data pipelines → machine learning, and I kept every layer. When a retrieval system is slow, I can tell whether it is the index, the query planner, the network hop, or the model, because I have shipped all four.',
-  'Depth sits in one column: retrieval, evaluation, compression, and serving of language and speech models. That is the part I go read papers about and the part companies hire me for.',
-  'Breadth is the reason the depth ships. Someone has to write the ingestion job, the Terraform, the dashboard, and the demo app before anyone can judge the model — on small teams that someone is me.'
+  'Most of what I have built, I built alone and all the way through — schema, API, interface, tests, and the deployment at the end. That is not a preference so much as how the projects arrived, and it left me comfortable owning a whole system rather than a slice of one.',
+  'The work splits in two directions that keep feeding each other. On one side, production web and mobile: a 204-file Arabic-first storefront with a real test suite. On the other, AI systems: a six-agent pipeline where safety screening runs before generation and a judge can send an answer back.',
+  'What I care about sits underneath both. Money computed in integer minor units because floats drift. One cart per identity because two requests will arrive at once. TimeSeriesSplit instead of random folds because a model that trains on the future scores beautifully and predicts nothing.',
+  'Almost everything I build is Arabic-first, for users in Egypt. That is a design constraint as much as a language one — it decides layout direction, register, and who the product is actually for.'
 ];
 
-export const DOMAINS = ['Healthcare', 'Consumer audio', 'Internal platforms', 'Fintech data', 'Embedded / IoT', 'Freelance product work'];
+export const DOMAINS = ['E-commerce', 'Healthcare', 'Geospatial research', 'Property rental', 'Developer tooling', 'Mobile & creative tools'];
 
-export const TBAR = ['Backend', 'Data eng', 'Infra', 'Frontend', 'Edge', 'Product'];
+export const TBAR = ['Frontend', 'Mobile', 'Backend', 'Data eng', 'Testing', 'Product'];
 
+/**
+ * Work history.
+ * TODO(ahmed): the internship's employer, job title and real start/end dates are
+ * still needed. The entry below is deliberately incomplete rather than guessed —
+ * fill it in before this goes anywhere public.
+ */
 export const TRACK = [
   {
-    when: '2025 — now', what: 'Lead AI Engineer', where: 'Meridian Health',
-    stack: ['Python', 'vLLM', 'Qdrant', 'Postgres', 'Modal', 'Terraform'],
+    when: '2026', what: 'Software Engineering Intern', where: 'Employer — to confirm',
+    stack: ['Next.js 15', 'TypeScript', 'Drizzle ORM', 'PostgreSQL', 'NextAuth v5', 'Playwright'],
     bullets: [
-      'Own the clinical retrieval stack end to end: OCR ingestion, hybrid search, reranking, serving, and the eval harness that gates every release.',
-      'Wrote the ingestion pipeline in Airflow before writing a line of model code — layout-aware OCR was worth more accuracy than any model swap we tried.',
-      'Run the on-call rotation for inference. Latency budget is 1.5s; the p95 has stayed under it through three model upgrades.',
-      'Mentor two engineers and sit in clinical review sessions, which is where most of the actual requirements come from.'
+      'Built ComFab, an Arabic-first e-commerce platform for medical compression garments, solo across 82 commits and 204 TypeScript source files.',
+      'Designed the schema on Drizzle over Neon Postgres, with checked-in migrations and a documented audit marking every table and column nothing read.',
+      'Ran a tracked hardening pass with severity labels: money recomputed in integer minor units, a uniqueness constraint plus conflict-tolerant getOrCreate to end duplicate carts, an analytics retention policy, and structured logging in place of console calls.',
+      'Stood up the test harness — Vitest for units, Playwright for the browse, cart and checkout flows where a bug costs a real order.'
     ]
   },
   {
-    when: '2023 — 2025', what: 'ML Engineer', where: 'Internal platform team',
-    stack: ['Kafka', 'ClickHouse', 'Grafana', 'Kubernetes', 'React', 'scikit-learn'],
+    when: '2025 — 2026', what: 'Independent projects', where: 'Self-directed',
+    stack: ['Python', 'Google ADK', 'FastAPI', 'React Native', 'Firebase', 'scikit-learn'],
     bullets: [
-      'Built and rolled out drift monitoring for 31 models across four product teams, including the alert routing and the dashboards people actually opened.',
-      'Ran the ranking model for internal search before LLMs were on the table — XGBoost, hand-built features, and an A/B harness.',
-      'Wrote the front end for the alert console myself in React because the design queue was six weeks long.',
-      'Cut GPU spend 38% by right-sizing batch sizes and moving batch jobs to spot capacity.'
-    ]
-  },
-  {
-    when: '2021 — 2023', what: 'Software Engineer, independent', where: 'Freelance / contract',
-    stack: ['PyTorch', 'ONNX', 'Core ML', 'Swift', 'FastAPI', 'Docker'],
-    bullets: [
-      'Delivered on-device speech models for two clients, from distillation through the iOS integration and the demo app.',
-      'Built the boring half repeatedly: FastAPI services, Postgres schemas, auth, billing webhooks, CI pipelines.',
-      'Scoped and priced my own work, which taught me to cut features early rather than negotiate deadlines late.'
-    ]
-  },
-  {
-    when: '2019 — 2021', what: 'Embedded / firmware, part-time', where: 'University lab & contracts',
-    stack: ['C', 'C++', 'RTOS', 'I2C/SPI', 'Jetson', 'MATLAB'],
-    bullets: [
-      'Firmware for sensor nodes: interrupt-driven drivers, power budgets, and debugging with a logic analyser instead of a stack trace.',
-      'First exposure to models under constraint — a classifier that had to run on a microcontroller, which is the same problem as quantising for a phone, just smaller.'
+      'Built SenioCare, a six-agent healthcare assistant for elderly users in Egypt, where safety screening runs before generation and a judge agent can reject an answer back to the generator.',
+      'Wrote a three-stage threaded Earth Engine pipeline for the Qattara Depression, forecasting with a Random Forest validated on TimeSeriesSplit and reporting into seasonal Excel workbooks with embedded charts.',
+      'Shipped two React Native apps: a chalet booking tool with role-based access and double-booking prevention, and an image editor that runs OpenCV.js inside a hidden WebView.',
+      'Contributed the map visualization, parameter-driven query builder, error UI and Earth Engine ETL layer to QueryFlow, a team-built SQL transpiler.'
     ]
   }
 ];
 
 export const TOOLBOX = [
-  { domain: 'AI / ML systems', depth: 'Deep — the vertical bar', did: 'Retrieval, reranking, evaluation harnesses, distillation, quantisation, and serving under a latency budget.', tools: ['PyTorch', 'vLLM', 'Transformers', 'Qdrant', 'FAISS', 'Ragas', 'ONNX Runtime', 'TensorRT'] },
-  { domain: 'Backend & APIs', depth: 'Strong', did: 'Production services behind every model I have shipped — schemas, auth, queues, retries, the parts that page you.', tools: ['FastAPI', 'Postgres', 'Redis', 'gRPC', 'Celery', 'Node'] },
-  { domain: 'Data engineering', depth: 'Strong', did: 'Batch and streaming pipelines that feed both training and monitoring, with backfills that do not corrupt history.', tools: ['Airflow', 'Kafka', 'dbt', 'Spark', 'ClickHouse', 'Parquet'] },
-  { domain: 'Infra & DevOps', depth: 'Working', did: 'GPU scheduling, cluster deploys, CI/CD, cost work. I own my own deploys rather than filing tickets for them.', tools: ['Kubernetes', 'Docker', 'Terraform', 'GitHub Actions', 'Modal', 'AWS'] },
-  { domain: 'Frontend', depth: 'Working', did: 'Internal consoles, eval dashboards, and demo apps — enough React and TypeScript to make a model reviewable by non-engineers.', tools: ['React', 'TypeScript', 'D3', 'Tailwind', 'Vite'] },
-  { domain: 'Mobile & edge', depth: 'Working', did: 'On-device inference shipped inside an iOS app; benchmarking on Jetson and phone-class hardware.', tools: ['Swift', 'Core ML', 'Android NDK', 'Jetson', 'int8 quantisation'] },
-  { domain: 'Computer vision', depth: 'Working', did: 'Layout-aware OCR and document parsing for scanned medical records, including the annotation tooling.', tools: ['OpenCV', 'Tesseract', 'PaddleOCR', 'Detectron2'] },
-  { domain: 'Speech & audio', depth: 'Strong', did: 'ASR distillation, VAD, streaming decode, and the evaluation sets that make WER numbers mean something.', tools: ['torchaudio', 'Whisper', 'Kaldi features', 'WebRTC VAD'] },
-  { domain: 'Classical ML & stats', depth: 'Strong', did: 'Ranking, forecasting, and experiment design from the years before an LLM was the default answer.', tools: ['scikit-learn', 'XGBoost', 'statsmodels', 'A/B testing'] },
-  { domain: 'Embedded', depth: 'Past life, still useful', did: 'C firmware on microcontrollers. Where the habit of counting bytes and cycles came from.', tools: ['C', 'C++', 'RTOS', 'SPI/I2C', 'Logic analysers'] },
-  { domain: 'Product & communication', depth: 'Working', did: 'Specs, model cards, clinical review sessions, and pricing my own contracts. I write the doc before the code.', tools: ['Figma', 'Notion', 'User interviews', 'Technical writing'] }
+  { domain: 'Full-stack web', depth: 'Deep — the vertical bar', did: 'Production Next.js 15 on the App Router: schema design, auth, server actions, and an Arabic-first internationalised front end.', tools: ['Next.js 15', 'TypeScript', 'React', 'Tailwind', 'shadcn/ui', 'Drizzle ORM', 'NextAuth v5', 'Zod'] },
+  { domain: 'AI agent systems', depth: 'Deep — the vertical bar', did: 'Multi-agent pipelines with routing, pre-generation safety screening, and a judge stage that rejects and re-runs rather than shipping a bad answer.', tools: ['Google ADK', 'FastAPI', 'Multi-agent orchestration', 'Arabic NLP'] },
+  { domain: 'Mobile', depth: 'Strong', did: 'Two shipped React Native apps plus a Flutter client, including a WebView bridge to run OpenCV.js where no native binding existed.', tools: ['React Native', 'Expo', 'Flutter', 'React Navigation', 'NativeWind'] },
+  { domain: 'Databases & data modelling', depth: 'Strong', did: 'Relational schemas with migrations and constraints that enforce invariants at the database rather than in application code.', tools: ['PostgreSQL', 'Neon', 'Drizzle', 'Firebase/Firestore', 'SQLite'] },
+  { domain: 'Data engineering', depth: 'Strong', did: 'Threaded producer-consumer pipelines over queues for rate-limited APIs, ending in reports a non-programmer can open.', tools: ['Python threading', 'queue', 'pandas', 'openpyxl', 'matplotlib'] },
+  { domain: 'Machine learning', depth: 'Working', did: 'Regression on time-series data with temporally correct validation and two-pass hyperparameter search.', tools: ['scikit-learn', 'RandomForest', 'TimeSeriesSplit', 'GridSearchCV'] },
+  { domain: 'Geospatial', depth: 'Working', did: 'Satellite imagery and weather analysis: vegetation and water indices, GeoTIFF export, and derived meteorological variables.', tools: ['Google Earth Engine', 'NDVI/NDWI', 'GeoTIFF', 'Landsat/Sentinel-2'] },
+  { domain: 'Testing', depth: 'Working', did: 'Unit and end-to-end coverage aimed first at the flows where a defect costs money.', tools: ['Vitest', 'Playwright'] },
+  { domain: 'Computer vision', depth: 'Working', did: 'Real-time image transforms on mobile and desktop — filters, thresholding, blurring, intensity adjustment.', tools: ['OpenCV', 'OpenCV.js', 'Tkinter'] },
+  { domain: 'Internationalisation', depth: 'Working', did: 'Arabic-first products where the primary locale drives layout direction and register, rather than being translated in afterwards.', tools: ['next-intl', 'RTL layout', 'Egyptian Arabic'] }
 ];
 
+/**
+ * Credentials.
+ * TODO(ahmed): confirm the exact degree name and the real start/end years.
+ * The institution is right; the dates below are placeholders.
+ */
 export const CREDS = [
   { title: 'Education', items: [
-    { name: 'B.Sc. Computer Engineering', meta: '2017 — 2021 · graduation project on embedded ML' },
-    { name: 'Deep Learning specialisation', meta: 'Self-paced, 2021 · the on-ramp out of firmware' }
+    { name: 'B.Sc. — Faculty of Computers and Informatics, Suez University', meta: 'Dates to confirm · graduation project: SenioCare' }
   ] },
-  { title: 'Certifications', items: [
-    { name: 'AWS Certified Machine Learning — Specialty', meta: '2024' },
-    { name: 'Certified Kubernetes Administrator (CKA)', meta: '2023' },
-    { name: 'NVIDIA — Deploying transformers at scale', meta: '2025' }
+  { title: 'Selected work', items: [
+    { name: 'ComFab — production e-commerce platform', meta: '204 TypeScript files · 82 commits · public repository' },
+    { name: 'SenioCare — six-agent healthcare assistant', meta: 'Google ADK · graduation project' },
+    { name: 'QueryFlow — team SQL transpiler', meta: 'Visualization, query builder and Earth Engine ETL' }
   ] },
-  { title: 'Languages & reach', items: [
-    { name: 'Arabic — native · English — fluent', meta: 'Worked with teams in Cairo, Berlin, Toronto' },
-    { name: 'Open source', meta: 'Contributions to retrieval and quantisation tooling' },
-    { name: 'Talks', meta: 'Two local meetup talks on evaluation harnesses' }
+  { title: 'Languages', items: [
+    { name: 'Arabic — native', meta: 'Egyptian dialect; builds Arabic-first interfaces' },
+    { name: 'English — professional', meta: 'Documentation, code and technical writing' }
   ] }
 ];
 
 export const PRINCIPLES = [
-  { title: 'Measure before modelling', body: 'The first week of any project goes to an evaluation set. Without one, every later decision is taste.' },
-  { title: 'The boring layer decides', body: 'Ingestion, indexing, and serving usually explain more of the result than the model choice does.' },
-  { title: 'Write the limits down', body: 'Model cards with a failure section. Whoever inherits the system needs the failures more than the benchmarks.' },
-  { title: 'Ship the whole slice', body: 'A model behind an API behind a UI someone can click. Half a slice teaches you nothing.' }
+  { title: 'Constraints belong in the database', body: 'A uniqueness constraint holds when two requests arrive at the same millisecond. A check in application code does not. Put the invariant where it cannot be bypassed.' },
+  { title: 'Precision before features', body: 'Money in integer minor units, time-series validated on time order. These are not optimisations — they are the difference between a number that is right and a number that looks right.' },
+  { title: 'Refusing is a feature', body: 'An assistant for elderly users that tries to be helpful about chest pain is worse than one that stops. Design the path where the system declines, and test it like any other.' },
+  { title: 'Ship it where they can open it', body: 'Researchers wanted a spreadsheet, not a notebook. Brokers wanted a phone app, not a dashboard. The deliverable is whatever the user can actually open.' }
 ];
 
 export const OFFCLOCK = [
-  { label: 'Teaching', body: 'Weekend sessions for juniors moving from web work into ML. Most of my explanations got clearer this way.' },
-  { label: 'Reading', body: 'Papers on retrieval and compression, plus a steady diet of postmortems from other outages.' },
-  { label: 'Building', body: 'Small tools I never publish — a receipt parser, a home audio transcriber, a chess move classifier.' },
-  { label: 'Away from screens', body: 'Long walks, film photography, and cooking that takes longer than it should.' }
+  { label: 'Building', body: 'Small tools that scratch a specific itch — an image editor, an algorithm visualiser, whatever the current annoyance is.' },
+  { label: 'Reading', body: 'Agent architectures and how people structure multi-step LLM systems, plus the postmortems where those systems fell over.' },
+  { label: 'Arabic-first', body: 'Thinking about what software looks like when Arabic is the primary language rather than a translation layer added at the end.' },
+  { label: 'Fundamentals', body: 'Revisiting the basics deliberately — compilers, sorting, concurrency — usually by building a small thing that demonstrates them.' }
 ];
 
 export const DOSSIER = [
-  { tag: 'A', label: 'Profile', title: 'Who is behind the files', note: 'The résumé version, unfolded. Where the depth is, and why the breadth exists.' },
-  { tag: 'B', label: 'Track record', title: 'Every role, in full', note: 'The same history as the résumé, with the bullets that did not fit on one page.' },
-  { tag: 'C', label: 'Toolbox', title: 'Tools, by domain', note: 'One deep column, ten adjacent ones. Depth labels are honest, not aspirational.' },
-  { tag: 'D', label: 'Credentials', title: 'Education & papers', note: 'Degrees, certifications, languages, and where I have spoken.' },
-  { tag: 'E', label: 'Beyond', title: 'How I work, and after hours', note: 'Working principles and what happens when the laptop closes.' }
+  { tag: 'A', label: 'Profile', title: 'Who is behind the files', note: 'How the work splits between production web and AI systems, and what connects them.' },
+  { tag: 'B', label: 'Track record', title: 'What I have built', note: 'The internship, the independent projects, and what each one actually involved.' },
+  { tag: 'C', label: 'Toolbox', title: 'Tools, by domain', note: 'Two deep columns, eight adjacent ones. Every entry is backed by a repository you can read.' },
+  { tag: 'D', label: 'Credentials', title: 'Education & work', note: 'Degree, selected projects, and languages.' },
+  { tag: 'E', label: 'Beyond', title: 'How I work, and after hours', note: 'The principles the code actually reflects, and what happens away from it.' }
 ];

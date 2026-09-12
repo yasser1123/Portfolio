@@ -1,25 +1,25 @@
 export const RESUME = {
-  fileName: '04 — Ahmed Yasser Résumé.pdf',
-  date: '31 Aug 2026',
-  size: '182 KB',
-  /** Drop a real PDF at this path and the Download button becomes live. */
+  fileName: '07 — Ahmed Yasser Résumé.pdf',
+  date: '12 Sep 2026',
+  size: 'PDF pending',
+  /** Drop a real PDF at this path and the Download button goes live. */
   pdfHref: './public/ahmed-yasser-resume.pdf',
-  head: { name: 'Ahmed Yasser', role: 'AI Engineer', place: 'Cairo · remote-friendly' },
+  head: { name: 'Ahmed Yasser', role: 'AI & Full-Stack Engineer', place: 'Cairo · remote-friendly' },
   links: [
-    { label: 'Email', value: 'hello@ahmedyasser.dev', href: 'mailto:hello@ahmedyasser.dev' },
-    { label: 'GitHub', value: 'github.com/ahmedyasser', href: '#' },
-    { label: 'LinkedIn', value: 'in/ahmedyasser', href: '#' },
+    { label: 'Email', value: 'ayasser.hashem@gmail.com', href: 'mailto:ayasser.hashem@gmail.com' },
+    { label: 'GitHub', value: 'github.com/yasser1123', href: 'https://github.com/yasser1123' },
+    { label: 'LinkedIn', value: 'in/ahmed-yasser-dev', href: 'https://linkedin.com/in/ahmed-yasser-dev' },
     { label: 'PDF', value: 'Download résumé', href: './public/ahmed-yasser-resume.pdf' }
   ],
-  intro: 'I build retrieval and inference systems that hold up in production — evaluation harnesses, serving stacks, and the monitoring that catches a regression before a user does.',
+  intro: 'I build complete systems on my own — production web and mobile apps, and the multi-agent AI pipelines behind them. Arabic-first by default, and careful about the parts that quietly go wrong: money precision, concurrent writes, and validation that respects time order.',
   roles: [
-    { when: '2025 — now', what: 'Lead AI Engineer', where: 'Meridian Health', note: 'Clinical retrieval over 12.4M scanned pages. Owned retrieval, eval harness and serving.' },
-    { when: '2023 — 2025', what: 'ML Engineer', where: 'Internal platform team', note: 'Built drift monitoring adopted by four product teams. Cut time-to-root-cause by 93%.' },
-    { when: '2021 — 2023', what: 'Software Engineer', where: 'Freelance / independent', note: 'On-device speech models, distillation and quantisation down to 34MB binaries.' }
+    { when: '2026', what: 'Software Engineering Intern', where: 'Employer — to confirm', note: 'Built ComFab solo: an Arabic-first e-commerce platform, 204 TypeScript files across 82 commits, with a Playwright and Vitest harness and a tracked hardening pass.' },
+    { when: '2025 — 2026', what: 'Independent projects', where: 'Self-directed', note: 'SenioCare (six-agent healthcare assistant), Qattara Depression (threaded Earth Engine pipeline with Random Forest forecasting), and two shipped React Native apps.' },
+    { when: '2025', what: 'Team contributor', where: 'QueryFlow — university project', note: 'Map visualization, parameter-driven query builder, error UI, and the Google Earth Engine ETL layer of a SQL transpiler.' }
   ],
   blocks: [
-    { title: 'Stack', items: ['Python, PyTorch', 'vLLM, ONNX Runtime', 'Qdrant, Postgres, ClickHouse', 'Kubernetes, Modal, Kafka'] },
-    { title: 'Focus', items: ['Retrieval & reranking', 'Evaluation harnesses', 'Quantisation & edge deploy', 'Production monitoring'] },
-    { title: 'Also', items: ['B.Sc. Computer Engineering', 'Arabic, English', 'Writes model cards nobody asked for'] }
+    { title: 'Stack', items: ['TypeScript, Python', 'Next.js 15, React, React Native', 'Drizzle, PostgreSQL, Firebase', 'FastAPI, Google ADK'] },
+    { title: 'Focus', items: ['Multi-agent AI pipelines', 'Full-stack product engineering', 'Concurrency & data pipelines', 'Arabic-first interfaces'] },
+    { title: 'Also', items: ['B.Sc. — Suez University', 'Arabic (native), English', 'Playwright, Vitest', 'Earth Engine, scikit-learn'] }
   ]
 };

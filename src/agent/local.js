@@ -1,91 +1,115 @@
 /**
  * Offline agent.
  *
- * Runs when no ANTHROPIC_API_KEY is configured, when /api/agent is missing
- * (a plain static host), or when the network call fails. Same return shape as
- * the remote path — { text, actions } — so the UI never branches.
+ * Runs when no model API key is configured, when /api/agent is missing (a plain
+ * static host), or when the network call fails. Same return shape as the remote
+ * path — { text, actions } — so the UI never branches.
+ *
+ * Every answer is grounded in src/data. Questions outside it get a plain
+ * "I don't have that" rather than an improvisation.
  */
 export function answerLocally(question) {
   const s = (question || '').toLowerCase();
   const has = (...w) => w.some((x) => s.indexOf(x) >= 0);
   const act = (name, input = {}) => [{ name, input }];
 
-  if (has('t-shape', 't shaped', 'tshape', 'breadth', 'generalist'))
+  if (has('comfab', 'e-commerce', 'ecommerce', 'commerce', 'storefront', 'shop', 'garment'))
     return {
-      text: 'Yes, and the dossier shows the shape directly. Depth is AI systems — retrieval, evaluation, compression, serving. Breadth covers backend, data engineering, infra, frontend, mobile/edge, vision, speech, classical ML, and embedded firmware.\n\nOpening the Toolbox tab so you can see the depth labels per domain.',
-      actions: act('show_dossier', { tab: 'toolbox' })
+      text: 'ComFab — an Arabic-first e-commerce platform for medical compression garments. 204 TypeScript files across 82 commits, Next.js 15 with Drizzle over Neon Postgres, and a hardening pass that moved money to integer minor units and ended duplicate carts with a database constraint. Opening it.',
+      actions: act('open_project', { id: 'comfab' })
+    };
+
+  if (has('seniocare', 'multi-agent', 'elderly', 'healthcare', 'adk', 'graduation'))
+    return {
+      text: 'SenioCare — a six-agent healthcare assistant for elderly users in Egypt, built on Google ADK. Intent, safety, fetch, generate, judge, format: safety screening runs before generation, and the judge can reject an answer back to the generator. Opening it.',
+      actions: act('open_project', { id: 'seniocare' })
+    };
+
+  if (has('qattara', 'geospatial', 'earth engine', 'satellite', 'thread', 'concurren', 'random forest', 'forecast'))
+    return {
+      text: 'Qattara Depression — a three-stage threaded Earth Engine pipeline. Fetcher, organiser and writers run concurrently over queues; a Random Forest validated on TimeSeriesSplit does the forecasting, and the output is a seasonal Excel workbook with charts embedded. Opening it.',
+      actions: act('open_project', { id: 'qattara' })
+    };
+
+  if (has('chalet', 'booking', 'rental', 'firebase', 'rbac'))
+    return {
+      text: 'Chalet Rental — a React Native booking app for chalet brokers, built around preventing double bookings. Firebase backing, with role-based access separating what an admin can do from what an assistant can do. Opening it.',
+      actions: act('open_project', { id: 'chalet' })
+    };
+
+  if (has('queryflow', 'transpiler', 'compiler', 'dsl', 'sql'))
+    return {
+      text: 'QueryFlow — a team-built SQL transpiler running SELECT syntax against eight data sources. His part was the map visualization, the parameter-driven query builder, the error UI and the Earth Engine ETL layer; the lexer, grammar and code generation were teammates work. Opening it.',
+      actions: act('open_project', { id: 'queryflow' })
+    };
+
+  if (has('artify', 'image', 'opencv', 'photo', 'filter', 'webview'))
+    return {
+      text: 'Artify — a React Native image editor that runs OpenCV.js inside an invisible WebView, because OpenCV has no React Native binding. Images cross the bridge as base64. Opening it.',
+      actions: act('open_project', { id: 'artify' })
+    };
+
+  if (has('best project', 'strongest', 'proudest', 'favourite', 'favorite'))
+    return {
+      text: 'Two, for different reasons. ComFab is the deepest codebase — 204 files, a real test suite, and correctness work on money and concurrency. SenioCare is the most interesting architecture — six agents with safety before generation and a judge that can reject. Opening ComFab first.',
+      actions: act('open_project', { id: 'comfab' })
     };
 
   if (has('resume', 'résumé', 'cv', 'pdf'))
-    return {
-      text: 'Opening file 04 — the one-page résumé. It is the summarised, job-targeted version; the dossier has the unabridged one.',
-      actions: act('open_resume')
-    };
+    return { text: 'Opening the one-page résumé. The dossier below has the longer version.', actions: act('open_resume') };
 
-  if (has('best project', 'strongest', 'proudest', 'halo', 'retrieval', 'rag', 'clinical'))
+  if (has('stack', 'tech', 'language', 'framework', 'tool', 'skill'))
     return {
-      text: 'File 01, Halo Retrieval — clinical retrieval over 12.4M scanned pages, 94% clinician-graded accuracy, 1.3s median latency. Opening it now.',
-      actions: act('open_project', { id: 'halo' })
-    };
-
-  if (has('drift', 'monitoring', 'mlops', 'sentinel', 'observability'))
-    return {
-      text: 'File 02, Drift Sentinel — drift monitoring across 31 models, 6-hour median detection lead time. Opening it.',
-      actions: act('open_project', { id: 'sentinel' })
-    };
-
-  if (has('kite', 'on-device', 'edge', 'quantis', 'mobile', 'speech', 'distill'))
-    return {
-      text: 'File 03, Kite — a 1.5B speech teacher distilled to 90M and quantised into a 34MB binary that runs with no network. Opening it.',
-      actions: act('open_project', { id: 'kite' })
-    };
-
-  if (has('tool', 'stack', 'tech', 'language', 'framework'))
-    return {
-      text: 'Deep: PyTorch, vLLM, Qdrant, ONNX Runtime, evaluation harnesses. Broad: FastAPI, Postgres, Kafka, Airflow, ClickHouse, Kubernetes, Terraform, React, TypeScript, Swift/Core ML, OpenCV, scikit-learn, and C on microcontrollers.\n\nThe Toolbox tab lists them by domain with an honest depth label.',
+      text: 'Deep: Next.js 15 with TypeScript, Drizzle and Postgres on the web side; Google ADK multi-agent pipelines on the AI side. Alongside those: React Native, Expo, Flutter, FastAPI, Firebase, scikit-learn, Google Earth Engine, Playwright and Vitest.\n\nThe Toolbox tab lists them by domain with an honest depth label — every entry points at a repository you can read.',
       actions: act('show_dossier', { tab: 'toolbox' })
     };
 
-  if (has('experience', 'years', 'history', 'worked', 'job', 'role', 'career'))
+  if (has('experience', 'history', 'worked', 'job', 'role', 'intern', 'career'))
     return {
-      text: 'Five years of paid engineering: embedded firmware (2019–21), independent software and on-device ML (2021–23), platform ML (2023–25), and lead AI engineer at Meridian Health since 2025.\n\nTaking you to the full track record.',
+      text: 'A software engineering internship in 2026, where he built ComFab solo, plus independent projects through 2025 and 2026 — SenioCare, the Qattara pipeline, and two React Native apps. Taking you to the full track record.',
       actions: act('show_dossier', { tab: 'track' })
     };
 
-  if (has('education', 'degree', 'cert', 'university', 'study'))
+  if (has('education', 'degree', 'university', 'study', 'school', 'graduate'))
     return {
-      text: 'B.Sc. Computer Engineering, AWS ML Specialty, CKA, and an NVIDIA course on deploying transformers. Opening the Credentials tab.',
+      text: 'B.Sc. from the Faculty of Computers and Informatics, Suez University, with SenioCare as the graduation project. Opening the Credentials tab.',
       actions: act('show_dossier', { tab: 'credentials' })
     };
 
-  if (has('hire', 'available', 'contact', 'email', 'freelance', 'salary', 'reach', 'talk'))
+  if (has('hire', 'available', 'contact', 'email', 'freelance', 'reach', 'talk', 'salary'))
     return {
-      text: 'He is open to senior AI engineering roles and selective contract work, remote or Cairo-based. Opening the Contact window — the email route is fastest, and he answers within a day.',
+      text: 'He is open to AI and full-stack engineering roles, Cairo or remote. Email is fastest — ayasser.hashem@gmail.com — and he answers within a day. Opening the contact window.',
       actions: act('open_contact', { subject: 'A role' })
     };
 
-  if (has('project', 'files', 'portfolio', 'work'))
+  if (has('principle', 'process', 'philosophy', 'how does he work', 'approach'))
     return {
-      text: 'Three case files: 01 Halo Retrieval (clinical RAG), 02 Drift Sentinel (MLOps monitoring), 03 Kite (on-device speech). Opening the folder — double-click any row.',
-      actions: act('open_folder')
-    };
-
-  if (has('principle', 'process', 'philosophy', 'how does he work'))
-    return {
-      text: 'Evaluation set before model. The boring layer decides the result. Write the limits down. Ship a whole slice.\n\nOpening the Beyond tab, which has these in full.',
+      text: 'Constraints belong in the database, not in application code. Precision before features. Refusing is a feature. Ship it where the user can actually open it.\n\nOpening the Beyond tab, which has these in full.',
       actions: act('show_dossier', { tab: 'beyond' })
     };
 
+  if (has('arabic', 'egypt', 'localis', 'localiz', 'i18n'))
+    return {
+      text: 'Almost everything he builds is Arabic-first. ComFab runs Arabic as its primary locale through next-intl, and SenioCare answers in Egyptian Arabic rather than translated clinical language. It is a design constraint, not a translation step bolted on at the end.',
+      actions: []
+    };
+
+  if (has('project', 'files', 'portfolio', 'work', 'built', 'show me'))
+    return {
+      text: 'Six case files: ComFab (e-commerce), SenioCare (multi-agent AI), Qattara Depression (geospatial and ML), Chalet Rental (mobile booking), QueryFlow (team SQL transpiler) and Artify (mobile image editing). Opening the folder.',
+      actions: act('open_folder')
+    };
+
   return {
-    text: 'I can cover his projects, his stack, his track record, credentials, or how he works — and I can open any of them for you. Try one of the chips, or ask about a specific tool or domain.',
+    text: 'I can cover his six projects, his stack, his track record, his education, or how he works — and I can open any of them for you. Try a chip below, or ask about a specific tool. Anything I do not have on file, I will say so rather than guess.',
     actions: []
   };
 }
 
 export const CHIPS = [
-  'Is he T-shaped?',
+  'What has he built?',
   'Best project',
-  'Open the résumé',
   'Tools he knows',
+  'Open the résumé',
   'How do I hire him?'
 ];

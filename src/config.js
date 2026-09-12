@@ -10,7 +10,7 @@ export const CONFIG = {
   },
 
   /** Where Contact mail goes when the serverless route is unavailable. */
-  contactEmail: 'hello@ahmedyasser.dev',
+  contactEmail: 'ayasser.hashem@gmail.com',
 
   /** Boot gate. */
   boot: {

@@ -15,7 +15,12 @@ export const SCHEMAS = [
     input_schema: {
       type: 'object',
       properties: {
-        id: { type: 'string', enum: PROJECTS.map((p) => p.id), description: 'Project id: halo (clinical RAG), sentinel (drift monitoring), kite (on-device speech).' }
+        id: {
+          type: 'string',
+          enum: PROJECTS.map((p) => p.id),
+          // Generated from the data so a new project needs no edit here.
+          description: 'Project id. ' + PROJECTS.map((p) => `${p.id} (${p.discipline})`).join('; ')
+        }
       },
       required: ['id']
     }

@@ -1,6 +1,10 @@
 /** The desktop surface: the folder sitting on the paper, and who it belongs to. */
 import { h, isTouch } from '../os/dom.js';
 import { PROFILE } from '../data/profile.js';
+import { PROJECTS } from '../data/projects.js';
+
+/** Case files plus the résumé. */
+const FILE_COUNT = PROJECTS.length + 1;
 
 export function renderHero(ctx) {
   const folder = h('button', {
@@ -20,7 +24,7 @@ export function renderHero(ctx) {
       h('div', { class: 'folder-front' })
     ),
     h('div', { class: 'folder-name' }, 'Portfolio'),
-    h('div', { class: 'label folder-meta' }, isTouch() ? '4 items · tap to open' : '4 items · double-click to open')
+    h('div', { class: 'label folder-meta' }, `${FILE_COUNT} items · ${isTouch() ? 'tap' : 'double-click'} to open`)
   );
 
   // The looping ghost cursor that teaches the double-click.
@@ -62,7 +66,7 @@ export function renderHero(ctx) {
     h('header', { class: 'hero-head' },
       h('span', { class: 'label' }, `${PROFILE.name} — ${PROFILE.role}`),
       h('div', { class: 'hero-head-right' },
-        h('span', { class: 'label' }, '4 files'),
+        h('span', { class: 'label' }, `${FILE_COUNT} files`),
         h('button', { class: 'label link-btn', onclick: () => ctx.actions.openContact() }, PROFILE.email)
       )
     ),

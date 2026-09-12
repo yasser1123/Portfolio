@@ -9,8 +9,14 @@
  */
 import { h, clear, isTouch } from './dom.js';
 import { CONFIG } from '../config.js';
+import { PROFILE } from '../data/profile.js';
+import { PROJECTS } from '../data/projects.js';
 
 const SESSION_KEY = 'portfolio-os:booted';
+
+/** Projects plus the résumé, as a file range: 001-007. */
+const FILE_COUNT = PROJECTS.length + 1;
+const FILE_RANGE = '001–' + String(FILE_COUNT).padStart(3, '0');
 
 const isFullscreen = () =>
   Boolean(document.fullscreenElement) ||
@@ -47,7 +53,7 @@ export function runBoot({ mount, onEnter }) {
   }, 'Or click to go fullscreen');
 
   const card = h('div', { class: 'boot-card-wrap' },
-    h('div', { class: 'boot-tab' }, h('span', { class: 'dim' }, '001–004'), h('span', null, 'Portfolio')),
+    h('div', { class: 'boot-tab' }, h('span', { class: 'dim' }, FILE_RANGE), h('span', null, 'Portfolio')),
     h('div', { class: 'boot-card' },
       h('div', { class: 'boot-name' }, 'Ahmed', h('br'), 'Yasser'),
       h('div', { class: 'boot-rule' }),
@@ -63,7 +69,7 @@ export function runBoot({ mount, onEnter }) {
         h('div', { class: 'boot-actions' }, enterBtn, touch ? null : fsBtn)
       )
     ),
-    h('div', { class: 'boot-stamp' }, 'AI Engineer')
+    h('div', { class: 'boot-stamp' }, PROFILE.role)
   );
 
   clear(mount).appendChild(card);

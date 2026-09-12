@@ -79,7 +79,7 @@ function build(ctx) {
       runActions(reply.actions);
     } catch (err) {
       pending.stop();
-      bubble('bot', 'Something went wrong reaching me. Try again, or email him directly at hello@ahmedyasser.dev.');
+      bubble('bot', 'Something went wrong reaching me. Try again, or email him directly at ayasser.hashem@gmail.com.');
     } finally {
       busy = false;
       sendBtn.disabled = false;
