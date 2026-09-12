@@ -10,7 +10,7 @@ export function openCaseFile(ctx, id) {
     // Case files are documents belonging to the Portfolio folder, so they light
     // that dock item's running indicator rather than needing a launcher of their own.
     id: winId, appId: 'finder',
-    title: `${p.num} — ${p.title}.case`, glyph: 'page',
+    title: `${p.num} ${p.title}.case`, glyph: 'page',
     width: 1040, height: 700,
     content: (win) => build(ctx, win, p)
   });
@@ -22,7 +22,7 @@ function build(ctx, win, project) {
 
   function render(p) {
     if (timer) { clearInterval(timer); timer = null; }
-    win.setTitle(`${p.num} — ${p.title}.case`);
+    win.setTitle(`${p.num} ${p.title}.case`);
     clear(scroll);
 
     // ── Header ──────────────────────────────────────────────────────────
@@ -30,7 +30,11 @@ function build(ctx, win, project) {
       h('div', { class: 'case-head' },
         h('div', null,
           h('h1', { class: 'case-title' }, p.title),
-          h('div', { class: 'label' }, `${p.client} · ${p.discipline}`)
+          h('div', { class: 'label' }, `${p.client} · ${p.discipline}`),
+          p.repo && h('a', {
+            class: 'label case-repo', href: p.repo,
+            target: '_blank', rel: 'noopener noreferrer'
+          }, 'Read the source →')
         ),
         h('div', null,
           h('p', { class: 'case-summary' }, p.summary),

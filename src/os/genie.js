@@ -79,7 +79,7 @@ function run(winEl, targetEl, reverse) {
   winEl.__genie = anim;
 
   // A hidden or backgrounded tab pauses the animation, and `finished` may never
-  // settle — which would strand the window half-collapsed. Cap the wait so the
+  // settle, which would strand the window half-collapsed. Cap the wait so the
   // caller always gets to finish its bookkeeping.
   const settled = Promise.race([
     anim.finished.catch(() => {}),

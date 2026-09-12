@@ -2,7 +2,7 @@
  * Agent client.
  *
  * Tries the serverless route first; falls back to the offline engine on any
- * failure — missing endpoint, no API key, timeout, rate limit. The UI calls
+ * failure: missing endpoint, no API key, timeout, rate limit. The UI calls
  * `ask()` and always gets { text, actions, source } back.
  */
 import { CONFIG } from '../config.js';
@@ -42,7 +42,15 @@ export async function ask(question, history = []) {
         remoteAvailable = false;
         throw new Error('agent endpoint unavailable');
       }
-      if (!res.ok) throw new Error(`agent ${res.status}`);
+      if (!res.ok) {
+        // Past the daily spend cap the endpoint will keep refusing, so stop
+        // asking and let the offline engine answer for the rest of the session.
+        if (res.status === 429) {
+          const info = await res.json().catch(() => ({}));
+          if (typeof info.code === 'string' && info.code.indexOf('daily_cap') === 0) remoteAvailable = false;
+        }
+        throw new Error(`agent ${res.status}`);
+      }
 
       const data = await res.json();
       if (!data || typeof data.text !== 'string') throw new Error('malformed agent response');

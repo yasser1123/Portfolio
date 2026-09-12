@@ -3,7 +3,7 @@
  *
  * One window = one absolutely-positioned element inside #window-layer, with a
  * macOS-shaped title bar: traffic lights left, centred title, drag anywhere on
- * the bar. Close / minimise / fullscreen behave the way they do on a Mac —
+ * the bar. Close / minimise / fullscreen behave the way they do on a Mac, and
  * closing a window leaves the app "running" only while it still has windows.
  */
 import { h, svg, clamp, prefersReducedMotion } from './dom.js';

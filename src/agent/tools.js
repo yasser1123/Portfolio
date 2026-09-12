@@ -1,17 +1,21 @@
 /**
  * Tools the agent can call.
  *
- * These are the single source of truth: /api/agent sends `SCHEMAS` to Claude as
- * its tool definitions, and whatever Claude calls comes back as `[{name, input}]`
- * for `runActions` to execute against the window manager. Adding a capability
- * means adding one entry here — the serverless function needs no edit.
+ * These are the single source of truth. /api/agent translates `SCHEMAS` into
+ * Gemini function declarations, and whatever the model calls comes back as
+ * `[{name, input}]` for `runActions` to execute against the window manager.
+ * Adding a capability means adding one entry here; the serverless function
+ * needs no edit.
+ *
+ * The schemas are written once in JSON Schema form. `geminiTools()` converts
+ * them, so the two never drift apart.
  */
 import { PROJECTS } from '../data/projects.js';
 
 export const SCHEMAS = [
   {
     name: 'open_project',
-    description: 'Open one of the three case-file windows. Use when the visitor asks about a specific project or when a project is the best evidence for their question.',
+    description: 'Open a case-file window. Use when the visitor asks about a specific project, or when a project is the best evidence for their question.',
     input_schema: {
       type: 'object',
       properties: {
@@ -32,7 +36,7 @@ export const SCHEMAS = [
   },
   {
     name: 'open_folder',
-    description: 'Open the Portfolio folder in the Finder so the visitor can browse all four files.',
+    description: 'Open the Portfolio folder in the Finder so the visitor can browse every file.',
     input_schema: { type: 'object', properties: {} }
   },
   {
@@ -57,8 +61,53 @@ export const SCHEMAS = [
       },
       required: ['tab']
     }
+  },
+  {
+    name: 'open_github',
+    description: 'Open source code on GitHub in a new tab. Pass a project id to open that repository, or omit it for the GitHub profile. Use when the visitor asks to see the code.',
+    input_schema: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'string',
+          enum: PROJECTS.map((p) => p.id),
+          description: 'Optional project id. Omit for the GitHub profile. ' + PROJECTS.map((p) => `${p.id} (${p.repo})`).join('; ')
+        }
+      }
+    }
   }
 ];
+
+/**
+ * Gemini speaks an OpenAPI subset: uppercase type names, `parameters` rather
+ * than `input_schema`, and no empty property bags. Converted here so the
+ * schemas above stay in one readable format.
+ */
+const GEMINI_TYPES = { object: 'OBJECT', string: 'STRING', number: 'NUMBER', integer: 'INTEGER', boolean: 'BOOLEAN', array: 'ARRAY' };
+
+function toGeminiSchema(node) {
+  const out = { type: GEMINI_TYPES[node.type] || 'STRING' };
+  if (node.description) out.description = node.description;
+  if (node.enum) out.enum = node.enum;
+  if (node.properties) {
+    out.properties = {};
+    for (const [key, value] of Object.entries(node.properties)) out.properties[key] = toGeminiSchema(value);
+  }
+  if (node.required && node.required.length) out.required = node.required;
+  return out;
+}
+
+export function geminiTools() {
+  return [{
+    functionDeclarations: SCHEMAS.map((tool) => {
+      const decl = { name: tool.name, description: tool.description };
+      // A parameterless tool must not carry an empty OBJECT; Gemini rejects it.
+      const props = tool.input_schema && tool.input_schema.properties;
+      if (props && Object.keys(props).length) decl.parameters = toGeminiSchema(tool.input_schema);
+      return decl;
+    })
+  }];
+}
 
 const TAB_INDEX = { profile: 0, track: 1, toolbox: 2, credentials: 3, beyond: 4 };
 
@@ -69,7 +118,8 @@ export function createRunner(actions) {
     open_resume: () => actions.openResume(),
     open_folder: () => actions.openFinder(),
     open_contact: ({ subject } = {}) => actions.openContact(subject),
-    show_dossier: ({ tab }) => actions.showDossier(TAB_INDEX[tab] ?? 0)
+    show_dossier: ({ tab }) => actions.showDossier(TAB_INDEX[tab] ?? 0),
+    open_github: ({ id } = {}) => actions.openGithub(id)
   };
 
   return function runActions(list, { delay = 420 } = {}) {

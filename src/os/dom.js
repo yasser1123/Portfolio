@@ -1,4 +1,4 @@
-/** Tiny DOM builder. No framework — the whole OS is ~30 small modules. */
+/** Tiny DOM builder. No framework. The whole OS is ~30 small modules. */
 
 export function h(tag, props, ...children) {
   const el = document.createElement(tag);

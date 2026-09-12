@@ -1,6 +1,10 @@
 /** The long-form dossier: five tabbed panels on the desktop, below the fold. */
 import { h, clear } from '../os/dom.js';
 import { DOSSIER, STORY, DOMAINS, TBAR, TRACK, TOOLBOX, CREDS, PRINCIPLES, OFFCLOCK } from '../data/profile.js';
+import { PROJECTS } from '../data/projects.js';
+
+/** Derived so adding a case file does not leave this line lying. */
+const CASE_RANGE = `01–${String(PROJECTS.length).padStart(2, '0')}`;
 
 export function renderDossier(ctx) {
   let active = 0;
@@ -25,7 +29,7 @@ export function renderDossier(ctx) {
   const section = h('section', { class: 'dos', id: 'dossier' },
     h('div', { class: 'dos-inner' },
       h('div', { class: 'dos-kicker' },
-        h('span', { class: 'label' }, 'Dossier — the long version'),
+        h('span', { class: 'label' }, 'Dossier, the long version'),
         h('span', { class: 'label dim' }, 'Everything the résumé had to cut')
       ),
       h('div', { class: 'dos-tabs' }, ...tabs),
@@ -33,7 +37,7 @@ export function renderDossier(ctx) {
         h('div', { class: 'dos-head' }, title, note),
         panel,
         h('div', { class: 'dos-foot' },
-          h('span', { class: 'label' }, 'Projects live in files 01–03 — open the folder above'),
+          h('span', { class: 'label' }, `Projects live in files ${CASE_RANGE}. Open the folder above`),
           h('button', { class: 'label link-btn accent', onclick: () => ctx.actions.openResume() }, 'Open the one-page résumé →')
         )
       )
@@ -74,7 +78,7 @@ function trackPanel() {
       h('div', { class: 'chips chips--tight' }, ...r.stack.map((s) => h('span', { class: 'chip chip--sq' }, s)))
     ),
     h('div', { class: 'track-bullets' }, ...r.bullets.map((b) => h('div', { class: 'bullet' },
-      h('span', { class: 'bullet-dash' }, '—'), h('span', null, b)
+      h('span', { class: 'bullet-dash' }, '–'), h('span', null, b)
     )))
   )));
 }

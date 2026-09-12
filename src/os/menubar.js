@@ -37,8 +37,12 @@ export function createMenubar({ mount, bus, actions }) {
   tick();
   setInterval(tick, 15000);
 
-  bus.on('win:focus', (win) => { appName.textContent = win ? win.title.split(' — ')[0] || win.title : 'Finder'; });
-  bus.on('win:title', (win) => { appName.textContent = win.title; });
+  // macOS names the application here, not the document, so case files read
+  // "Finder" like every other window the folder owns.
+  const APP_NAMES = { finder: 'Finder', resume: 'Résumé', contact: 'Contact', agent: 'Agent' };
+  const nameOf = (win) => (win ? APP_NAMES[win.appId] || win.title : 'Finder');
+
+  bus.on('win:focus', (win) => { appName.textContent = nameOf(win); });
 
   return { el: mount };
 }

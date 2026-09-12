@@ -36,7 +36,7 @@ export function adapt(req, res) {
 
 /**
  * Best-effort per-IP limiter. Serverless instances are ephemeral and not shared,
- * so this trims obvious abuse but is not a security control — put a real WAF or
+ * so this trims obvious abuse but is not a security control. Put a real WAF or
  * edge rate limit in front if this ever matters.
  */
 const buckets = new Map();
@@ -50,4 +50,36 @@ export function rateLimited(ip, { limit = 20, windowMs = 60_000 } = {}) {
   b.count += 1;
   if (buckets.size > 5000) buckets.clear();
   return b.count > limit;
+}
+
+/**
+ * Daily caps: one per visitor, one for the whole deployment.
+ *
+ * The model costs money per call and this endpoint is open to the internet, so
+ * the global cap is the thing that actually protects the bill. Like the limiter
+ * above it lives in instance memory, so a platform running several instances
+ * enforces the cap per instance rather than globally. It is a spend guard, not
+ * a security control.
+ *
+ * Returns null when the call is allowed, or 'ip' / 'global' naming the cap that
+ * stopped it. Counting happens here, so call it once per request.
+ */
+const today = { key: '', total: 0, byIp: new Map() };
+
+export function dailyCapped(ip, { perIp = 40, global = 1000 } = {}) {
+  const key = new Date().toISOString().slice(0, 10);
+  if (today.key !== key) {
+    today.key = key;
+    today.total = 0;
+    today.byIp.clear();
+  }
+
+  if (today.total >= global) return 'global';
+  const used = today.byIp.get(ip) || 0;
+  if (used >= perIp) return 'ip';
+
+  if (today.byIp.size > 20_000) today.byIp.clear();
+  today.byIp.set(ip, used + 1);
+  today.total += 1;
+  return null;
 }

@@ -88,7 +88,9 @@
 
 /* Body */
 .win-body { flex: 1; min-height: 0; display: flex; flex-direction: column; background: var(--paper-0); }
-.win-scroll { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; }
+/* Window content sizes itself off the window, not the viewport: a 1040px
+   document on a 2560px screen must not lay out as though it had 2560px. */
+.win-scroll { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; container: win / inline-size; }
 
 /* Resize grip */
 .win-grip {

@@ -2,7 +2,7 @@
  * Contact window.
  *
  * Posts to /api/contact when that route is deployed and configured. When it is
- * not — a plain static host, or no RESEND_API_KEY — it falls back to opening the
+ * not (a plain static host, or no RESEND_API_KEY) it falls back to opening the
  * visitor's own mail client with everything pre-filled, so the form is never a
  * dead end and never silently swallows a message.
  */
@@ -13,7 +13,7 @@ import { CONFIG } from '../config.js';
 export function openContact(ctx, subject) {
   const win = ctx.wm.open({
     id: 'contact', appId: 'contact',
-    title: 'Contact — Ahmed Yasser', glyph: 'mail',
+    title: 'Contact · Ahmed Yasser', glyph: 'mail',
     width: 720, height: 620,
     content: () => build(ctx)
   });
@@ -25,7 +25,7 @@ export function openContact(ctx, subject) {
 }
 
 function mailtoFallback({ name, email, subject, message }) {
-  const body = `${message}\n\n— ${name}\nReply to: ${email}`;
+  const body = `${message}\n\n${name}\nReply to: ${email}`;
   return `mailto:${CONTACT.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
@@ -96,7 +96,7 @@ function build(ctx) {
       say('Sent. He answers within a day.', 'good');
       form.reset();
     } catch (err) {
-      // No delivery route — hand the message to the visitor's mail client.
+      // No delivery route: hand the message to the visitor's mail client.
       window.location.href = mailtoFallback(v);
       say('Opening your mail app with the message ready to send.', 'good');
     } finally {

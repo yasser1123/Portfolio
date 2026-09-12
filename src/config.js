@@ -1,6 +1,6 @@
 /**
- * Deployment-time configuration. Everything here is safe to ship to the client —
- * secrets live in environment variables consumed by the functions in /api.
+ * Deployment-time configuration. Everything here is safe to ship to the client.
+ * Secrets live in environment variables consumed by the functions in /api.
  */
 export const CONFIG = {
   /** Serverless endpoints. Set to null to force the offline fallbacks. */

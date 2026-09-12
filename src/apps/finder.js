@@ -15,10 +15,10 @@ export function openFinder(ctx) {
 function entries(ctx) {
   return [
     ...PROJECTS.map((p) => ({
-      name: `${p.num} — ${p.title}.case`,
+      name: `${p.num} ${p.title}.case`,
       date: p.date,
       kind: 'Case file',
-      size: '— ',
+      size: '–',
       open: () => ctx.actions.openProject(p.id)
     })),
     {
@@ -67,7 +67,7 @@ function build(ctx, win) {
       : `${rows.length} items · 1 selected`;
   }
 
-  // Keyboard: arrows move, Enter opens — the way a file list should behave.
+  // Keyboard: arrows move, Enter opens, the way a file list should behave.
   list.addEventListener('keydown', (ev) => {
     if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
       ev.preventDefault();

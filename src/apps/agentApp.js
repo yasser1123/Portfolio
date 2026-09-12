@@ -1,9 +1,9 @@
 /**
- * Agent window — toggled from the dock.
+ * Agent window, toggled from the dock.
  *
  * Owns the transcript; asks src/agent/client.js for an answer and replays any
  * tool calls that came back against the window manager. Whether the answer came
- * from Claude or the offline engine is shown in the status bar rather than
+ * from the model or the offline engine is shown in the status bar rather than
  * hidden, because a visitor deserves to know which one they are talking to.
  */
 import { h, clear } from '../os/dom.js';
@@ -11,12 +11,12 @@ import { ask, isRemoteAvailable } from '../agent/client.js';
 import { CHIPS } from '../agent/local.js';
 import { createRunner } from '../agent/tools.js';
 
-const GREETING = 'I am the agent for this portfolio. I know his files, his stack, and where everything lives — ask, or tap a chip below.';
+const GREETING = 'I am the agent for this portfolio. I know his files, his stack, and where everything lives. Ask, or tap a chip below.';
 
 export function openAgent(ctx) {
   return ctx.wm.open({
     id: 'agent', appId: 'agent',
-    title: 'Agent — ask about Ahmed', glyph: 'agent',
+    title: 'Agent · ask about Ahmed', glyph: 'agent',
     width: 460, height: 580,
     content: () => build(ctx)
   });
@@ -74,7 +74,7 @@ function build(ctx) {
       pending.stop();
       bubble('bot', reply.text);
       history.push({ role: 'assistant', content: reply.text });
-      source.textContent = reply.source === 'remote' ? 'Claude' : 'offline answers';
+      source.textContent = reply.source === 'remote' ? 'live model' : 'offline answers';
       source.className = 'ag-source' + (reply.source === 'remote' ? ' is-live' : '');
       runActions(reply.actions);
     } catch (err) {

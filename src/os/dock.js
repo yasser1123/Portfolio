@@ -66,7 +66,7 @@ export function createDock({ mount, bus, apps }) {
   // marked. The tile is also the rect the genie animation flies into, which is
   // why it is created on open rather than on minimise.
   function tileInitial(title) {
-    return String(title || '?').replace(/^\d+\s*[—-]\s*/, '').trim().charAt(0).toUpperCase();
+    return String(title || '?').replace(/^\d+[\s\p{Pd}]*/u, '').trim().charAt(0).toUpperCase();
   }
 
   function addTile(win) {

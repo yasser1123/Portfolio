@@ -12,6 +12,7 @@ import { openResume } from './apps/resumeApp.js';
 import { openContact } from './apps/contactApp.js';
 import { openAgent, toggleAgent } from './apps/agentApp.js';
 import { PROFILE } from './data/profile.js';
+import { findProject } from './data/projects.js';
 
 const bus = createBus();
 const osRoot = $('#os');
@@ -60,7 +61,26 @@ Object.assign(actions, {
   openDossier: () => actions.showDossier(null),
 
   /**
-   * The dossier lives on the desktop, behind the windows — so getting to it
+   * The agent can offer the source. By the time its reply lands the click that
+   * started it is long gone, so the browser may refuse the popup. When it does,
+   * open the case file instead, which carries the same link for the visitor to
+   * click themselves.
+   */
+  openGithub: (id) => {
+    const project = id ? findProject(id) : null;
+    const profileLink = PROFILE.links.find((l) => l.label === 'GitHub');
+    const url = (project && project.repo) || (profileLink && profileLink.href);
+    if (!url) return;
+    const tab = window.open(url, '_blank', 'noopener,noreferrer');
+    if (tab) return;
+    // Blocked. Put the visitor somewhere the link is clickable by hand: the case
+    // file carries its own repository link, and the folder leads to all of them.
+    if (project) actions.openProject(project.id);
+    else actions.openFinder();
+  },
+
+  /**
+   * The dossier lives on the desktop, behind the windows, so getting to it
    * means clearing the desk first. Every open window tucks into the dock, then
    * we scroll. Nothing is closed: one click on a dock tile brings it all back.
    */
@@ -72,7 +92,7 @@ Object.assign(actions, {
     if (open.length) await Promise.all(open.map((w) => w.minimize()));
 
     // Switching tabs changes the panel's height, so a pixel target computed
-    // before the relayout lands in the wrong place — scrollIntoView resolves the
+    // before the relayout lands in the wrong place. scrollIntoView resolves the
     // position itself and flushes layout first. Called directly rather than in a
     // rAF, which never fires while the tab is in the background.
     dossierSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -116,7 +136,7 @@ runBoot({
     osRoot.hidden = false;
     const dockWrap = $('#dock');
     dockWrap.classList.add('is-entering');
-    // rAF gives the nicest slide-up, but it never fires in a background tab —
+    // rAF gives the nicest slide-up, but it never fires in a background tab,
     // so a timer guarantees the dock arrives either way.
     const reveal = () => dockWrap.classList.remove('is-entering');
     requestAnimationFrame(() => requestAnimationFrame(reveal));

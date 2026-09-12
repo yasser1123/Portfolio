@@ -58,13 +58,13 @@ export function renderHero(ctx) {
   const scrollCue = h('button', {
     class: 'scroll-cue', onclick: () => ctx.actions.showDossier(null)
   },
-    h('span', { class: 'label' }, 'Scroll — the long version'),
+    h('span', { class: 'label' }, 'Scroll for the long version'),
     h('span', { class: 'scroll-arrow' }, '↓')
   );
 
   return h('section', { class: 'hero' },
     h('header', { class: 'hero-head' },
-      h('span', { class: 'label' }, `${PROFILE.name} — ${PROFILE.role}`),
+      h('span', { class: 'label' }, `${PROFILE.name} · ${PROFILE.role}`),
       h('div', { class: 'hero-head-right' },
         h('span', { class: 'label' }, `${FILE_COUNT} files`),
         h('button', { class: 'label link-btn', onclick: () => ctx.actions.openContact() }, PROFILE.email)

@@ -3,7 +3,7 @@
  *
  * Runs when no model API key is configured, when /api/agent is missing (a plain
  * static host), or when the network call fails. Same return shape as the remote
- * path — { text, actions } — so the UI never branches.
+ * path, { text, actions }, so the UI never branches.
  *
  * Every answer is grounded in src/data. Questions outside it get a plain
  * "I don't have that" rather than an improvisation.
@@ -15,43 +15,50 @@ export function answerLocally(question) {
 
   if (has('comfab', 'e-commerce', 'ecommerce', 'commerce', 'storefront', 'shop', 'garment'))
     return {
-      text: 'ComFab — an Arabic-first e-commerce platform for medical compression garments. 204 TypeScript files across 82 commits, Next.js 15 with Drizzle over Neon Postgres, and a hardening pass that moved money to integer minor units and ended duplicate carts with a database constraint. Opening it.',
+      text: 'ComFab, an Arabic-first e-commerce platform for medical compression garments. 204 TypeScript files across 82 commits, Next.js 15 with Drizzle over Neon Postgres, and a hardening pass that moved money to integer minor units and ended duplicate carts with a database constraint. Opening it.',
       actions: act('open_project', { id: 'comfab' })
     };
 
   if (has('seniocare', 'multi-agent', 'elderly', 'healthcare', 'adk', 'graduation'))
     return {
-      text: 'SenioCare — a six-agent healthcare assistant for elderly users in Egypt, built on Google ADK. Intent, safety, fetch, generate, judge, format: safety screening runs before generation, and the judge can reject an answer back to the generator. Opening it.',
+      text: 'SenioCare, a six-agent healthcare assistant for elderly users in Egypt, built on Google ADK. Intent, safety, fetch, generate, judge, format: safety screening runs before generation, and the judge can reject an answer back to the generator. Opening it.',
       actions: act('open_project', { id: 'seniocare' })
     };
 
   if (has('qattara', 'geospatial', 'earth engine', 'satellite', 'thread', 'concurren', 'random forest', 'forecast'))
     return {
-      text: 'Qattara Depression — a three-stage threaded Earth Engine pipeline. Fetcher, organiser and writers run concurrently over queues; a Random Forest validated on TimeSeriesSplit does the forecasting, and the output is a seasonal Excel workbook with charts embedded. Opening it.',
+      text: 'Qattara & QueryFlow, one Earth Engine problem solved twice. The pipeline is his: fetcher, organiser and writers running concurrently over queues, a Random Forest validated on TimeSeriesSplit, and a seasonal Excel workbook with charts embedded. The same data layer resurfaced in QueryFlow, a university team SQL transpiler, where he built the ETL, the parameter-driven query builder, the map rendering and the error UI. Opening it.',
       actions: act('open_project', { id: 'qattara' })
     };
 
   if (has('chalet', 'booking', 'rental', 'firebase', 'rbac'))
     return {
-      text: 'Chalet Rental — a React Native booking app for chalet brokers, built around preventing double bookings. Firebase backing, with role-based access separating what an admin can do from what an assistant can do. Opening it.',
+      text: 'Chalet Rental, a React Native booking app for chalet brokers, built around preventing double bookings. Firebase backing, with role-based access separating what an admin can do from what an assistant can do. Opening it.',
       actions: act('open_project', { id: 'chalet' })
     };
 
-  if (has('queryflow', 'transpiler', 'compiler', 'dsl', 'sql'))
+  if (has('queryflow', 'transpiler', 'compiler', 'dsl', 'sql', 'map'))
     return {
-      text: 'QueryFlow — a team-built SQL transpiler running SELECT syntax against eight data sources. His part was the map visualization, the parameter-driven query builder, the error UI and the Earth Engine ETL layer; the lexer, grammar and code generation were teammates work. Opening it.',
-      actions: act('open_project', { id: 'queryflow' })
+      text: 'QueryFlow is the team half of the Qattara case file: a SQL transpiler running SELECT syntax against eight data sources. His part was the map visualization, the parameter-driven query builder, the error UI and the Earth Engine ETL layer. The lexer, grammar and code generation were teammates work. Opening the case file.',
+      actions: act('open_project', { id: 'qattara' })
+    };
+
+  // Asked for the code rather than the write-up: hand over the repository.
+  if (has('github', 'repo', 'repository', 'source code', 'see the code', 'show me the code'))
+    return {
+      text: 'Everything public lives on github.com/yasser1123. ComFab is the fullest codebase, at 204 TypeScript files across 82 commits. Opening GitHub in a new tab; if the browser blocks it, the link is in each case file under the title.',
+      actions: act('open_github')
     };
 
   if (has('artify', 'image', 'opencv', 'photo', 'filter', 'webview'))
     return {
-      text: 'Artify — a React Native image editor that runs OpenCV.js inside an invisible WebView, because OpenCV has no React Native binding. Images cross the bridge as base64. Opening it.',
+      text: 'Artify, a React Native image editor that runs OpenCV.js inside an invisible WebView, because OpenCV has no React Native binding. Images cross the bridge as base64. Opening it.',
       actions: act('open_project', { id: 'artify' })
     };
 
   if (has('best project', 'strongest', 'proudest', 'favourite', 'favorite'))
     return {
-      text: 'Two, for different reasons. ComFab is the deepest codebase — 204 files, a real test suite, and correctness work on money and concurrency. SenioCare is the most interesting architecture — six agents with safety before generation and a judge that can reject. Opening ComFab first.',
+      text: 'Two, for different reasons. ComFab is the deepest codebase: 204 files, a real test suite, and correctness work on money and concurrency. SenioCare is the most interesting architecture, six agents with safety before generation and a judge that can reject. Opening ComFab first.',
       actions: act('open_project', { id: 'comfab' })
     };
 
@@ -60,13 +67,13 @@ export function answerLocally(question) {
 
   if (has('stack', 'tech', 'language', 'framework', 'tool', 'skill'))
     return {
-      text: 'Deep: Next.js 15 with TypeScript, Drizzle and Postgres on the web side; Google ADK multi-agent pipelines on the AI side. Alongside those: React Native, Expo, Flutter, FastAPI, Firebase, scikit-learn, Google Earth Engine, Playwright and Vitest.\n\nThe Toolbox tab lists them by domain with an honest depth label — every entry points at a repository you can read.',
+      text: 'Deep: Next.js 15 with TypeScript, Drizzle and Postgres on the web side; Google ADK multi-agent pipelines on the AI side. Alongside those: React Native, Expo, Flutter, FastAPI, Firebase, scikit-learn, Google Earth Engine, Playwright and Vitest.\n\nThe Toolbox tab lists them by domain with an honest depth label, every entry points at a repository you can read.',
       actions: act('show_dossier', { tab: 'toolbox' })
     };
 
   if (has('experience', 'history', 'worked', 'job', 'role', 'intern', 'career'))
     return {
-      text: 'A software engineering internship in 2026, where he built ComFab solo, plus independent projects through 2025 and 2026 — SenioCare, the Qattara pipeline, and two React Native apps. Taking you to the full track record.',
+      text: 'A software engineering internship in 2026, where he built ComFab solo, plus independent projects through 2025 and 2026: SenioCare, the Qattara pipeline, and two React Native apps. Taking you to the full track record.',
       actions: act('show_dossier', { tab: 'track' })
     };
 
@@ -78,7 +85,7 @@ export function answerLocally(question) {
 
   if (has('hire', 'available', 'contact', 'email', 'freelance', 'reach', 'talk', 'salary'))
     return {
-      text: 'He is open to AI and full-stack engineering roles, Cairo or remote. Email is fastest — ayasser.hashem@gmail.com — and he answers within a day. Opening the contact window.',
+      text: 'He is open to AI and full-stack engineering roles, Cairo or remote. Email is fastest, ayasser.hashem@gmail.com, and he answers within a day. Opening the contact window.',
       actions: act('open_contact', { subject: 'A role' })
     };
 
@@ -96,12 +103,12 @@ export function answerLocally(question) {
 
   if (has('project', 'files', 'portfolio', 'work', 'built', 'show me'))
     return {
-      text: 'Six case files: ComFab (e-commerce), SenioCare (multi-agent AI), Qattara Depression (geospatial and ML), Chalet Rental (mobile booking), QueryFlow (team SQL transpiler) and Artify (mobile image editing). Opening the folder.',
+      text: 'Five case files: ComFab (e-commerce), SenioCare (multi-agent AI), Qattara & QueryFlow (geospatial pipeline and query tool), Chalet Rental (mobile booking) and Artify (mobile image editing). Opening the folder.',
       actions: act('open_folder')
     };
 
   return {
-    text: 'I can cover his six projects, his stack, his track record, his education, or how he works — and I can open any of them for you. Try a chip below, or ask about a specific tool. Anything I do not have on file, I will say so rather than guess.',
+    text: 'I can cover his five projects, his stack, his track record, his education, or how he works, and I can open any of them for you. Try a chip below, or ask about a specific tool. Anything I do not have on file, I will say so rather than guess.',
     actions: []
   };
 }

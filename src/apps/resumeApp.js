@@ -64,7 +64,7 @@ function build(ctx) {
     ),
     h('div', { class: 'win-scroll desk' }, sheet),
     h('div', { class: 'win-status' },
-      h('span', null, 'The summarised version — the dossier has the rest'),
+      h('span', null, 'The summarised version. The dossier has the rest'),
       h('button', { class: 'link-btn', onclick: () => ctx.actions.showDossier(1) }, 'Open the dossier →')
     )
   );

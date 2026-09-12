@@ -1,6 +1,6 @@
 export const CONTACT = {
   headline: 'Say hello',
-  note: 'Open to AI and full-stack engineering roles, in Cairo or remote. Email reaches me fastest — I answer within a day.',
+  note: 'Open to AI and full-stack engineering roles, in Cairo or remote. Email reaches me fastest. I answer within a day.',
   email: 'ayasser.hashem@gmail.com',
   location: 'Cairo, Egypt · UTC+2',
   availability: 'Open to work',

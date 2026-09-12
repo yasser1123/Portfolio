@@ -5,7 +5,7 @@
  * really lands edge-to-edge. F11 is owned by the browser and cannot be
  * triggered from script, so we ask for it, detect when it happens, and also
  * offer a button that uses the Fullscreen API. Either way the visitor can
- * walk straight past — never trap someone behind a display preference.
+ * walk straight past. Never trap someone behind a display preference.
  */
 import { h, clear, isTouch } from './dom.js';
 import { CONFIG } from '../config.js';
@@ -62,8 +62,8 @@ export function runBoot({ mount, onEnter }) {
         h('div', { class: 'boot-instruction' },
           touch ? null : keycap,
           touch
-            ? h('span', null, 'This portfolio is a desktop. It works best on a bigger screen — but it folds down to fit, so come in.')
-            : h('span', null, 'Press ', h('strong', null, 'F11'), ' for fullscreen. This portfolio is a desktop — it wants the whole screen.')
+            ? h('span', null, 'This portfolio is a desktop. It works best on a bigger screen, but it folds down to fit, so come in.')
+            : h('span', null, 'Press ', h('strong', null, 'F11'), ' for fullscreen. This portfolio is a desktop. It wants the whole screen.')
         ),
         touch ? null : h('div', { class: 'boot-hint' }, status),
         h('div', { class: 'boot-actions' }, enterBtn, touch ? null : fsBtn)
@@ -81,7 +81,7 @@ export function runBoot({ mount, onEnter }) {
     const on = isFullscreen();
     mount.classList.toggle('is-fullscreen', on);
     const text = mount.querySelector('.boot-status-text');
-    if (text) text.textContent = on ? 'Fullscreen — ready' : 'Windowed';
+    if (text) text.textContent = on ? 'Fullscreen ready' : 'Windowed';
     enterBtn.textContent = on ? 'Come in →' : 'Come in anyway →';
     fsBtn.textContent = on ? 'Exit fullscreen' : 'Or click to go fullscreen';
   }

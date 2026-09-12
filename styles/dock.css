@@ -25,7 +25,7 @@
   max-width: calc(100vw - 24px);
   /* Must stay visible: tooltips sit above the dock and magnified icons grow
      past its top edge. Setting overflow-x makes overflow-y compute to `auto`
-     as well, which clips both — so scrolling is only enabled below, on touch,
+     as well, which clips both, so scrolling is only enabled below, on touch,
      where there are no hover tooltips to lose. */
   overflow: visible;
 }

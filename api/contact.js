@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     return io.send(501, { error: 'Contact delivery not configured' });
   }
   if (rateLimited(io.ip(), { limit: 5, windowMs: 10 * 60_000 })) {
-    return io.send(429, { error: 'Too many messages — try again later' });
+    return io.send(429, { error: 'Too many messages. Try again later' });
   }
 
   const body = await io.body();
@@ -44,7 +44,7 @@ export default async function handler(req, res) {
         from,
         to: [to],
         reply_to: email,
-        subject: `[Portfolio] ${subject} — ${name}`,
+        subject: `[Portfolio] ${subject} · ${name}`,
         text: `From: ${name} <${email}>\nSubject: ${subject}\n\n${message}`
       })
     });
